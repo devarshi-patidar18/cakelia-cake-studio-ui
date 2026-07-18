@@ -1,0 +1,31 @@
+<header class="header">
+  <div class="container">
+
+    <a class="logo" routerLink="/">
+      <img src="assets/ccs_without_bg.png" alt="Cakelia Cake Studio">
+    </a>
+
+    <nav class="nav" [class.active]="menuOpen">
+      <a routerLink="/">Home</a>
+      <a routerLink="/cakes">Cakes</a>
+      <a routerLink="/gallery">Gallery</a>
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+
+      <button class="order-btn">
+        Order Now
+      </button>
+    </nav>
+
+    <button class="menu-btn"
+            (click)="toggleMenu()"
+            aria-label="Toggle Menu">
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </button>
+
+  </div>
+</header>
