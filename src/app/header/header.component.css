@@ -127,3 +127,135 @@
         height:50px;
     }
 }
+
+.shine-btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:10px 30px;
+
+    font-size:18px;
+    font-weight:600;
+
+    color:#fff;
+
+    background:linear-gradient(135deg,#ff5fa2,#ff8fb8);
+
+    border:none;
+    border-radius:50px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+
+    box-shadow:0 10px 25px rgba(255,105,180,.35);
+}
+
+.shine-btn:hover{
+    transform:translateY(-4px) scale(1.03);
+    box-shadow:0 15px 35px rgba(255,105,180,.5);
+}
+
+/* Animated white shine */
+
+.shine{
+
+    position:absolute;
+
+    top:-40%;
+    left:-60%;
+
+    width:45%;
+    height:180%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.95),
+        transparent
+    );
+
+    transform:rotate(25deg);
+
+    animation:shineMove 2.8s infinite;
+}
+
+@keyframes shineMove{
+
+    0%{
+        left:-70%;
+    }
+
+    100%{
+        left:140%;
+    }
+}
+
+/* Stars */
+
+.star{
+
+    position:absolute;
+
+    color:white;
+
+    font-size:10px;
+
+    opacity:0;
+
+    animation:twinkle 2.2s infinite ease-in-out;
+}
+
+.star1{
+
+    top:8px;
+    left:18px;
+
+    animation-delay:0s;
+}
+
+.star2{
+
+    top:10px;
+    right:20px;
+
+    animation-delay:.8s;
+}
+
+.star3{
+
+    bottom:8px;
+    right:35px;
+
+    animation-delay:1.6s;
+}
+
+@keyframes twinkle{
+
+    0%{
+
+        opacity:0;
+        transform:scale(.2) rotate(0deg);
+    }
+
+    40%{
+
+        opacity:1;
+        transform:scale(1.5) rotate(180deg);
+    }
+
+    80%{
+
+        opacity:0;
+        transform:scale(.2) rotate(360deg);
+    }
+
+    100%{
+
+        opacity:0;
+    }
+}

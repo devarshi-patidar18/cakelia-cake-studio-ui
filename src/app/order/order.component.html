@@ -1,0 +1,162 @@
+<div class="order-container">
+
+    <div class="banner">
+        <h1>Order Your Dream Cake 🎂</h1>
+
+        <p>
+            Freshly baked with love ❤️
+        </p>
+    </div>
+
+    <form>
+
+        <div class="card">
+
+            <h2>Cake Details</h2>
+
+            <div class="grid">
+
+                <div>
+
+                    <label>Cake Type</label>
+
+                    <select>
+                        <option>Birthday Cake</option>
+                        <option>Anniversary Cake</option>
+                        <option>Wedding Cake</option>
+                        <option>Theme Cake</option>
+                    </select>
+
+                </div>
+
+                <div>
+
+                    <label>Flavour</label>
+
+                    <select>
+
+                        <option>Chocolate</option>
+                        <option>Vanilla</option>
+                        <option>Butterscotch</option>
+                        <option>Red Velvet</option>
+                        <option>Pineapple</option>
+
+                    </select>
+
+                </div>
+
+                <div>
+
+                    <label>Weight</label>
+
+                    <select>
+
+                        <option>500 gm</option>
+                        <option>1 Kg</option>
+                        <option>1.5 Kg</option>
+                        <option>2 Kg</option>
+                        <option>3 Kg</option>
+
+                    </select>
+
+                </div>
+
+                <div>
+
+                    <label>Shape</label>
+
+                    <select>
+
+                        <option>Round</option>
+                        <option>Square</option>
+                        <option>Heart</option>
+                        <option>Rectangle</option>
+
+                    </select>
+                
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Occasion</h2>
+
+            <select>
+
+                <option>Birthday</option>
+                <option>Anniversary</option>
+                <option>Wedding</option>
+                <option>Baby Shower</option>
+                <option>Engagement</option>
+                <option>Other</option>
+
+            </select>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Delivery Details</h2>
+
+            <div class="grid">
+
+                <input
+                    type="text"
+                    placeholder="Customer Name">
+
+                <input
+                    type="tel"
+                    placeholder="Mobile Number">
+
+                <input
+                    type="date">
+
+                <input
+                    type="time">
+
+            </div>
+
+            <textarea
+                rows="4"
+                placeholder="Delivery Address"></textarea>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Customisation</h2>
+
+            <input
+                type="text"
+                placeholder="Message on Cake">
+
+            <textarea
+                rows="5"
+                placeholder="Describe your cake"></textarea>
+
+            <input type="file">
+
+        </div>
+
+        <div class="price-card">
+
+            <h2>Estimated Price</h2>
+
+            <h1>₹ {{price}}</h1>
+
+            <button
+                type="button"
+                (click)="orderNow()">
+
+                Proceed to WhatsApp
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
