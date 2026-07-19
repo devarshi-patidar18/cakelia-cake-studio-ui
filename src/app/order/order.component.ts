@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
@@ -168,11 +169,47 @@ export class OrderComponent implements OnInit {
         environment.EMAILJS_TEMPLATE_ID,
         templateParams
       );
-      alert('Order request sent successfully!');
+      // alert('Order request sent successfully!');
+      this.submitOrder();
     } catch (error: any) {
       console.error('EmailJS error:', error);
       const message = error?.text || 'Please verify your EmailJS service ID, template ID, and public key.';
       alert(`Unable to send order request right now. ${message}`);
     }
   }
+
+  showPopup = false;
+
+  // orderId = '';
+
+  submitOrder() {
+
+    // Save order here (API)
+
+    this.orderId = this.generateOrderId();
+
+    this.showPopup = true;
+
+  }
+
+  closePopup() {
+
+    this.showPopup = false;
+
+  }
+
+  goWhatsapp() {
+
+    const message =
+      `Hello, I have submitted my order.\nOrder ID: ${this.orderId}`;
+
+    window.open(
+      'https://wa.me/919329754288?text=' +
+      encodeURIComponent(message),
+      '_blank'
+    );
+
+  }
+
+  
 }

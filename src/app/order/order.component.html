@@ -194,3 +194,65 @@
     </form>
 
 </div>
+
+@if(showPopup){
+    <div class="popup-overlay">
+
+    <div class="popup">
+
+        <div class="success-icon">
+
+            ✓
+
+        </div>
+
+        <h2>Order Submitted Successfully!</h2>
+
+        <p>
+
+            Thank you for choosing
+            <strong>Cakelia Cake Studio</strong>.
+
+        </p>
+
+        <p>
+
+            We have received your request.
+
+            Our team will contact you shortly to confirm
+            your order.
+
+        </p>
+
+        <div class="order-id">
+
+            Order ID
+
+            <strong>#{{orderId}}</strong>
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+                class="whatsapp-btn"
+                (click)="goWhatsapp()">
+
+                WhatsApp Us
+
+            </button>
+
+            <button
+                class="home-btn"
+                (click)="closePopup()">
+
+                Continue Shopping
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+}
