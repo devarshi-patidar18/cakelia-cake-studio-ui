@@ -59,17 +59,55 @@ form {
     gap: 16px;
 }
 
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.time-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.time-picker .time-select {
+    min-width: 78px;
+    width: auto;
+}
+
+.time-picker span {
+    color: #8a5a6b;
+    font-weight: 700;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+}
+
 label {
     display: block;
-    margin-bottom: 8px;
     color: #8a5a6b;
     font-weight: 600;
 }
 
-input,
-select,
-textarea {
+
+select {
     width: 100%;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid #f2c7d8;
+    background: #fffdfd;
+    font-size: 15px;
+    color: #5d3b46;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field-group input, .field-group textarea {
+    /* width: 100%; */
     padding: 13px 14px;
     border-radius: 12px;
     border: 1px solid #f2c7d8;
@@ -128,6 +166,15 @@ button {
 button:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+}
+
+.submit-btn {
+    margin-top: 8px;
+    background: linear-gradient(135deg, #ff5fa2 0%, #ff7fb2 100%);
+    color: #fff;
+    width: 100%;
+    max-width: 260px;
+    align-self: center;
 }
 
 @media (max-width: 700px) {

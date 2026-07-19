@@ -8,7 +8,7 @@
         </p>
     </div>
 
-    <form>
+    <form (ngSubmit)="orderNow()">
 
         <div class="card">
 
@@ -20,7 +20,7 @@
 
                     <label>Cake Type</label>
 
-                    <select>
+                    <select [(ngModel)]="cakeType" name="cakeType">
                         <option>Birthday Cake</option>
                         <option>Anniversary Cake</option>
                         <option>Wedding Cake</option>
@@ -33,7 +33,7 @@
 
                     <label>Flavour</label>
 
-                    <select>
+                    <select [(ngModel)]="flavour" name="flavour">
 
                         <option>Chocolate</option>
                         <option>Vanilla</option>
@@ -49,13 +49,13 @@
 
                     <label>Weight</label>
 
-                    <select>
+                    <select [(ngModel)]="weight" name="weight" (change)="updatePrice()">
 
-                        <option>500 gm</option>
-                        <option>1 Kg</option>
-                        <option>1.5 Kg</option>
-                        <option>2 Kg</option>
-                        <option>3 Kg</option>
+                        <option value="500 gm">500 gm</option>
+                        <option value="1 Kg">1 Kg</option>
+                        <option value="1.5 Kg">1.5 Kg</option>
+                        <option value="2 Kg">2 Kg</option>
+                        <option value="3 Kg">3 Kg</option>
 
                     </select>
 
@@ -65,7 +65,7 @@
 
                     <label>Shape</label>
 
-                    <select>
+                    <select [(ngModel)]="shape" name="shape">
 
                         <option>Round</option>
                         <option>Square</option>
@@ -73,55 +73,86 @@
                         <option>Rectangle</option>
 
                     </select>
-                
+
+                </div>
+                <!-- <div> -->
+
+
+                <div>
+                    <label>Occasion</label>
+                    <select [(ngModel)]="occasion" name="occasion">
+                        <option>Birthday</option>
+                        <option>Anniversary</option>
+                        <option>Wedding</option>
+                        <option>Baby Shower</option>
+                        <option>Engagement</option>
+                        <option>Other</option>
+
+                    </select>
                 </div>
 
             </div>
 
         </div>
 
-        <div class="card">
 
-            <h2>Occasion</h2>
-
-            <select>
-
-                <option>Birthday</option>
-                <option>Anniversary</option>
-                <option>Wedding</option>
-                <option>Baby Shower</option>
-                <option>Engagement</option>
-                <option>Other</option>
-
-            </select>
-
-        </div>
 
         <div class="card">
 
             <h2>Delivery Details</h2>
 
             <div class="grid">
+                <div class="field-group">
+                    <label>Customer Name</label>
+                    <input type="text" [(ngModel)]="customerName" name="customerName" placeholder="Customer Name">
+                </div>
 
-                <input
-                    type="text"
-                    placeholder="Customer Name">
+                <div class="field-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" [(ngModel)]="mobileNumber" name="mobileNumber" placeholder="Mobile Number">
+                </div>
 
-                <input
-                    type="tel"
-                    placeholder="Mobile Number">
+                <div class="field-group">
+                    <label>Delivery Date</label>
+                    <input type="date" [(ngModel)]="deliveryDate" name="deliveryDate">
+                </div>
 
-                <input
-                    type="date">
-
-                <input
-                    type="time">
-
+                <div class="field-group">
+                    <label>Delivery Time</label>
+                    <div class="time-picker">
+                        <select class="time-select" [(ngModel)]="deliveryHour" name="deliveryHour">
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                        <span>:</span>
+                        <select class="time-select" [(ngModel)]="deliveryMinute" name="deliveryMinute">
+                            <option>00</option>
+                            <option>15</option>
+                            <option>30</option>
+                            <option>45</option>
+                        </select>
+                        <select class="time-select" [(ngModel)]="deliveryPeriod" name="deliveryPeriod">
+                            <option>AM</option>
+                            <option>PM</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <textarea
-                rows="4"
-                placeholder="Delivery Address"></textarea>
+            <div class="field-group full-width">
+                <label>Delivery Address</label>
+                <textarea rows="4" [(ngModel)]="deliveryAddress" name="deliveryAddress" placeholder="Delivery Address"></textarea>
+            </div>
 
         </div>
 
@@ -129,15 +160,20 @@
 
             <h2>Customisation</h2>
 
-            <input
-                type="text"
-                placeholder="Message on Cake">
+            <div class="field-group">
+                <label>Message on Cake</label>
+                <input type="text" [(ngModel)]="messageOnCake" name="messageOnCake" placeholder="Message on Cake">
+            </div>
 
-            <textarea
-                rows="5"
-                placeholder="Describe your cake"></textarea>
+            <div class="field-group full-width">
+                <label>Describe Your Cake</label>
+                <textarea rows="5" [(ngModel)]="description" name="description" placeholder="Describe your cake"></textarea>
+            </div>
 
-            <input type="file">
+            <div class="field-group">
+                <label>Upload Reference</label>
+                <input type="file" [(ngModel)]="uploadReference" name="uploadReference">
+            </div>
 
         </div>
 
@@ -147,11 +183,9 @@
 
             <h1>₹ {{price}}</h1>
 
-            <button
-                type="button"
-                (click)="orderNow()">
+            <button type="submit">
 
-                Proceed to WhatsApp
+                Confirm Order
 
             </button>
 
