@@ -1,0 +1,375 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.hero {
+
+    height: 100vh;
+
+    background: url("../../assets/bg_cover_2_simple.png") center center/cover;
+
+    position: relative;
+
+    color: white;
+}
+
+.overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .45);
+}
+
+header {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 25px 8%;
+}
+
+.logo img {
+
+    width: 180px;
+}
+
+nav a {
+
+    color: white;
+
+    text-decoration: none;
+
+    margin-left: 30px;
+
+    font-size: 18px;
+
+    transition: .3s;
+}
+
+nav a:hover {
+
+    color: #FFD700;
+}
+
+.content {
+
+    position: relative;
+
+    z-index: 2;
+
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+.content h1 {
+
+    font-size: 70px;
+
+    margin-bottom: 15px;
+}
+
+.content h2 {
+
+    font-size: 32px;
+
+    color: #FFD700;
+
+    margin-bottom: 20px;
+}
+
+.content p {
+
+    max-width: 700px;
+
+    line-height: 1.8;
+
+    font-size: 20px;
+
+    margin-bottom: 40px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.btn {
+
+    padding: 16px 35px;
+
+    border-radius: 50px;
+
+    text-decoration: none;
+
+    color: white;
+
+    font-size: 18px;
+
+    transition: .3s;
+
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn {
+    width: 51px;
+    height: 51px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 24px;
+}
+
+.primary {
+    background: #ff4081;
+    color: #ffffff;
+}
+
+.order-btn {
+    min-width: 180px;
+}
+
+.primary:hover {
+
+    transform: translateY(-5px);
+}
+
+.whatsapp {
+
+    background: #25D366;
+}
+
+.call {
+    padding: 10px;
+    background: #6a84d0;
+}
+
+.instagram {
+    background: #e4405f;
+}
+
+.whatsapp:hover,
+.call:hover,
+.instagram:hover {
+
+    transform: translateY(-5px);
+}
+
+.features {
+
+    display: flex;
+
+    gap: 50px;
+
+    margin-top: 70px;
+
+    font-size: 22px;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+}
+
+@media(max-width:900px) {
+
+    nav {
+        display: none;
+    }
+
+    .content h1 {
+
+        font-size: 42px;
+    }
+
+    .content h2 {
+
+        font-size: 24px;
+    }
+
+    .content p {
+
+        font-size: 18px;
+    }
+
+    .logo img {
+
+        width: 140px;
+    }
+
+    .features {
+
+        gap: 20px;
+
+        font-size: 18px;
+    }
+}
+
+
+.shine-btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:16px 40px;
+
+    font-size:18px;
+    font-weight:600;
+
+    color:#fff;
+
+    background:linear-gradient(135deg,#ff5fa2,#ff8fb8);
+
+    border:none;
+    border-radius:50px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+
+    box-shadow:0 10px 25px rgba(255,105,180,.35);
+}
+
+.shine-btn:hover{
+    transform:translateY(-4px) scale(1.03);
+    box-shadow:0 15px 35px rgba(255,105,180,.5);
+}
+
+/* Animated white shine */
+
+.shine{
+
+    position:absolute;
+
+    top:-40%;
+    left:-60%;
+
+    width:45%;
+    height:180%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.95),
+        transparent
+    );
+
+    transform:rotate(25deg);
+
+    animation:shineMove 2.8s infinite;
+}
+
+@keyframes shineMove{
+
+    0%{
+        left:-70%;
+    }
+
+    100%{
+        left:140%;
+    }
+}
+
+/* Stars */
+
+.star{
+
+    position:absolute;
+
+    color:white;
+
+    font-size:10px;
+
+    opacity:0;
+
+    animation:twinkle 2.2s infinite ease-in-out;
+}
+
+.star1{
+
+    top:8px;
+    left:18px;
+
+    animation-delay:0s;
+}
+
+.star2{
+
+    top:10px;
+    right:20px;
+
+    animation-delay:.8s;
+}
+
+.star3{
+
+    bottom:8px;
+    right:35px;
+
+    animation-delay:1.6s;
+}
+
+@keyframes twinkle{
+
+    0%{
+
+        opacity:0;
+        transform:scale(.2) rotate(0deg);
+    }
+
+    40%{
+
+        opacity:1;
+        transform:scale(1.5) rotate(180deg);
+    }
+
+    80%{
+
+        opacity:0;
+        transform:scale(.2) rotate(360deg);
+    }
+
+    100%{
+
+        opacity:0;
+    }
+}
