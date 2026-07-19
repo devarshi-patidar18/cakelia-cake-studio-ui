@@ -1,0 +1,42 @@
+<section class="gallery">
+
+    <div class="heading">
+
+        <h1>Our Cake Gallery</h1>
+
+        <p>
+            Crafted with Love • Made for Every Celebration
+        </p>
+
+    </div>
+
+    <div class="category-list">
+
+        <button *ngFor="let item of categories" (click)="filter(item)" [class.active]="selectedCategory==item">
+
+            {{item}}
+
+        </button>
+
+    </div>
+
+    <div class="grid">
+        <div *ngFor="let cake of filteredCakes" class="card" (click)="open(cake.image)">
+            <img [src]="cake.image" [alt]="cake.title">
+
+            <div class="overlay">
+                <h3>{{cake.title}}</h3>
+                <span>{{cake.category}}</span>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@if(selectedImage){
+<div class="lightbox" (click)="close()">
+
+    <img [src]="selectedImage">
+
+</div>
+}

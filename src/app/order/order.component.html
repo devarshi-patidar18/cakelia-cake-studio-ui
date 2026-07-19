@@ -170,22 +170,18 @@
                 <textarea rows="5" [(ngModel)]="description" name="description" placeholder="Describe your cake"></textarea>
             </div>
 
-            <div class="field-group">
-                <label>Upload Reference</label>
-                <input type="file" [(ngModel)]="uploadReference" name="uploadReference">
-            </div>
-
         </div>
 
         <div class="price-card">
 
             <h2>Estimated Price</h2>
+            Note: Estimated price may vary based on customisation.
 
             <h1>₹ {{price}}</h1>
 
             <button type="submit">
 
-                Confirm Order
+                Order Now
 
             </button>
 
@@ -219,7 +215,10 @@
 
             We have received your request.
 
+            Our team will contact you shortly to confirm the details and finalize your order.
+
             Your order will be delivered on <strong>{{deliveryDate | date:'fullDate'}}</strong> at <strong>{{deliveryHour}}:{{deliveryMinute}} {{deliveryPeriod}}</strong>.
+            Delivery Address: <strong>{{deliveryAddress}}</strong>.
 
         </p>
 
