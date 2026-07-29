@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { environment } from '../environments/environment';
-import { HeaderComponent } from './header/header.component';
+// import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [HeaderComponent, RouterOutlet],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   private readonly visitEmailSentKey = 'cakelia-visit-email-sent';
 
   ngOnInit(): void {
-    void this.sendVisitEmail();
+    // void this.sendVisitEmail();
   }
 
   private async sendVisitEmail(): Promise<void> {

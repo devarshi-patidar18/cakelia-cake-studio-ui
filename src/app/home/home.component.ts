@@ -1,23 +1,17 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  standalone: true,
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit {
-  constructor(private router:Router){}
-  ngAfterViewInit(): void {
-    
+export class HomeComponent {
+
+  menuOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 
-  orderNow() {
-    this.router.navigate(["/order"]);
-  // window.open(
-  //   'https://wa.me/919329754288?text=Hi, I want to order a cake.',
-  //   '_blank'
-  // );
-}
 }
