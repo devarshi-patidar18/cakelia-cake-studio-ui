@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Cake {
 
@@ -18,6 +19,8 @@ interface Cake {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+
+  constructor(private router: Router) { }
 
   menuOpen = false;
 
@@ -153,4 +156,16 @@ export class HomeComponent {
 
   }
 
+  goToOrder(): void {
+
+    const hero = document.querySelector('.hero-section');
+
+    hero?.classList.add('fade-out');
+
+    setTimeout(() => {
+
+      this.router.navigate(['/order']);
+
+    }, 600);
+  }
 }
