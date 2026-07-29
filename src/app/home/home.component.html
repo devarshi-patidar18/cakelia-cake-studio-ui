@@ -108,58 +108,130 @@
 <script src="app.js"></script> -->
 
 
+<section class="hero-section">
 
-<div class="hero">
+    <!-- Overlay -->
+    <div class="overlay"></div>
 
-  <!-- Header -->
-  <header class="header">
+    <!-- Header -->
+    <header class="header">
 
-    <div class="logo">
-      <img src="assets/ccs_without_bg.png" alt="Cakelia Cake Studio">
+        <div class="logo">
+
+            <img src="assets/ccs_without_bg.png" alt="Cakelia Cake Studio">
+
+        </div>
+
+        <nav class="desktop-nav">
+
+            <a href="#">Home</a>
+            <a href="#">Cakes</a>
+            <a href="#">Gallery</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+
+        </nav>
+
+        <button class="order-btn">
+            Order Now
+        </button>
+
+        <div class="mobile-menu-btn" (click)="toggleMenu()">
+
+            ☰
+
+        </div>
+
+    </header>
+
+    <!-- Mobile Menu -->
+
+    <div class="mobile-menu" [class.open]="menuOpen">
+
+        <a href="#">Home</a>
+        <a href="#">Cakes</a>
+        <a href="#">Gallery</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+
     </div>
 
-    <nav>
+    <!-- Hero Cake -->
 
-      <a href="#">Home</a>
+    <div class="hero-content">
 
-      <a href="#">Cakes</a>
-
-      <a href="#">Gallery</a>
-
-      <a href="#">About</a>
-
-      <a href="#">Contact</a>
-
-    </nav>
-
-    <button class="order-btn">
-      Order Now
-    </button>
-
-    <div class="menu-btn"
-         (click)="toggleMenu()">
-
-      ☰
+        <!-- Empty because hero image already contains cake -->
 
     </div>
 
-  </header>
+    <!-- Cake Carousel -->
 
-  <!-- Mobile Menu -->
+    <div class="cake-carousel">
 
-  <div class="mobile-menu"
-       [class.open]="menuOpen">
+        <!-- Previous -->
 
-      <a href="#">Home</a>
+        <button class="arrow left" (click)="previousSlide()">
 
-      <a href="#">Cakes</a>
+            ❮
 
-      <a href="#">Gallery</a>
+        </button>
 
-      <a href="#">About</a>
+        <!-- Cards -->
 
-      <a href="#">Contact</a>
+        <div class="carousel-wrapper">
 
-  </div>
+            @for(cake of cakes;track cake){
+            <div class="cake-card" [class.active]="$index===currentIndex" [class.left]="$index===leftIndex"
+                [class.right]="$index===rightIndex" [class.hidden]="
+                $index!==currentIndex &&
+                $index!==leftIndex &&
+                $index!==rightIndex">
 
-</div>
+                <!-- <div class="image-box"> -->
+
+                    <img [src]="cake.image" [alt]="cake.name">
+
+                <!-- </div> -->
+
+                <!-- <div class="cake-info">
+
+                    <h3>
+
+                        {{cake.name}}
+
+                    </h3>
+
+                    <p>
+
+                        {{cake.category}}
+
+                    </p>
+
+
+                </div> -->
+
+            </div>
+            }
+        </div>
+
+        <!-- Next -->
+
+        <button class="arrow right" (click)="nextSlide()">
+
+            ❯
+
+        </button>
+
+    </div>
+
+    <!-- Indicators -->
+
+    <div class="dots">
+
+        @for(cake of cakes;track cake;) {
+        <span (click)="goToSlide($index)" [class.active]="currentIndex==$index">
+        </span>
+        }
+    </div>
+
+</section>
