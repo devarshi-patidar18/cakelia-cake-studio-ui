@@ -61,7 +61,7 @@
 
     position:relative;
 
-    z-index:10;
+    z-index:100;
 
     width:100%;
 
@@ -189,19 +189,19 @@
 
     justify-content:center;
 
+    padding:0 24px;
+
 }
 
 .carousel-wrapper{
 
-    width:100%;
+    position:relative;
 
-    display:flex;
+    width:min(100%, 860px);
 
-    justify-content:center;
+    height:300px;
 
-    align-items:flex-end;
-
-    gap:25px;
+    overflow:visible;
 
 }
 
@@ -211,7 +211,15 @@
 
 .cake-card{
 
+    position:absolute;
+
+    top:0;
+
+    left:50%;
+
     width:200px;
+
+    height:250px;
 
     border-radius:28px;
 
@@ -221,14 +229,13 @@
 
     overflow:hidden;
 
-    transition:.5s;
+    transition:transform .6s ease, opacity .6s ease, left .6s ease, box-shadow .6s ease;
 
     opacity:.35;
 
-    transform:scale(.82);
+    transform:translateX(-50%) scale(.82);
 
     border:1px solid rgba(255,255,255,.12);
-    height: 250px
 
 }
 
@@ -236,7 +243,7 @@
 
     width:100%;
 
-    height:320px;
+    height:100%;
 
     object-fit:cover;
 
@@ -292,7 +299,7 @@
 
     opacity:1;
 
-    transform:scale(1.12);
+    transform:translateX(-50%) scale(1.08);
 
     border:2px solid #F6C86E;
 
@@ -310,12 +317,27 @@
    LEFT RIGHT
 --------------------------------*/
 
-.cake-card.left,
+.cake-card.left{
+
+    left:calc(50% - 220px);
+
+    opacity:.45;
+
+    transform:translateX(-50%) scale(.9);
+
+    z-index:2;
+
+}
+
 .cake-card.right{
 
-    opacity:.35;
+    left:calc(50% + 220px);
 
-    transform:scale(.92);
+    opacity:.45;
+
+    transform:translateX(-50%) scale(.9);
+
+    z-index:2;
 
 }
 
@@ -435,14 +457,32 @@
 
 .cake-card{
 
-    width:120px;
-    height:120px;
+    width:160px;
+    height:200px;
+
+}
+
+.cake-card.left{
+
+    left:calc(50% - 180px);
+
+}
+
+.cake-card.right{
+
+    left:calc(50% + 180px);
+
+}
+
+.carousel-wrapper{
+
+    height:240px;
 
 }
 
 .cake-card img{
 
-    height:120px;
+    height:100%;
 
 }
 
@@ -453,6 +493,39 @@
 --------------------------------*/
 
 @media(max-width:768px){
+
+.cake-carousel{
+
+    bottom:18px;
+
+    padding:0 12px;
+
+}
+
+.carousel-wrapper{
+
+    height:220px;
+
+}
+
+.cake-card{
+
+    width:120px;
+    height:160px;
+
+}
+
+.cake-card.left{
+
+    left:calc(50% - 140px);
+
+}
+
+.cake-card.right{
+
+    left:calc(50% + 140px);
+
+}
 
 .desktop-nav{
 
@@ -518,7 +591,7 @@
 
 .cake-carousel{
 
-    top:-420px;
+    top:-320px;
 
 }
 
