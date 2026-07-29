@@ -313,7 +313,7 @@
 .cake-card.left,
 .cake-card.right{
 
-    opacity:.55;
+    opacity:.35;
 
     transform:scale(.92);
 
@@ -435,14 +435,14 @@
 
 .cake-card{
 
-    width:160px;
-    height:160px;
+    width:120px;
+    height:120px;
 
 }
 
 .cake-card img{
 
-    height:200px;
+    height:120px;
 
 }
 
@@ -518,14 +518,14 @@
 
 .cake-carousel{
 
-    bottom:90px;
+    top:-420px;
 
 }
 
 .cake-card{
 
-    width:160px;
-    height: 180px;
+    width:120px;
+    height: 120px;
 
 }
 
@@ -568,13 +568,13 @@
 
 .cake-card{
 
-    width:200px;
+    width:120px;
 
 }
 
 .cake-card img{
     
-    height:200px;
+    height:120px;
 
 }
 
