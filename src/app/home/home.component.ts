@@ -1,171 +1,90 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-interface Cake {
-
+interface Product {
+  id: number;
   name: string;
-
-  category: string;
-
+  price: number;
   image: string;
-
 }
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
-
-  constructor(private router: Router) { }
-
+export class HomeComponent implements OnInit, OnDestroy {
+  currentSlide = 0;
+  cartCount = 0;
   menuOpen = false;
+  toastMessage = '';
 
-  currentIndex = 0;
+  private sliderTimer?: ReturnType<typeof setInterval>;
+  private toastTimer?: ReturnType<typeof setTimeout>;
 
-  autoSlide: any;
+  heroSlides = [
+    { image: 'assets/ccs_without_bg12.png', alt: 'Beautiful pink celebration cake' },
+    { image: 'assets/extra_chocolate_with_3_flowers.jpeg', alt: 'Cakelia custom cake' },
+    { image: 'assets/free_home_delivery_image.jpeg', alt: 'Cakelia birthday cake' }
+  ];
 
-  cakes: Cake[] = [
+  categories = [
+    { name: 'Birthday', icon: 'assets/icons/cake_icon1.jpeg' },
+    { name: 'Anniversary', icon: 'assets/icons/cake_icon2.jpeg' },
+    { name: 'Chocolate', icon: 'assets/icons/cake_icon3.jpeg' },
+    { name: 'Custom Cake', icon: 'assets/icons/cake_icon4.jpeg' },
+    { name: 'More', icon: '' }
+  ];
 
-    {
-      name: 'Chocolate Delight',
-      category: 'Chocolate Cake',
-      image: 'assets/extra_chocolate_with_3_flowers.jpeg'
-    },
-
-    {
-      name: 'Red Velvet',
-      category: 'Premium Cake',
-      image: 'assets/heart.jpeg'
-    },
-
-    {
-      name: 'Blueberry Bliss',
-      category: 'Fresh Fruit Cake',
-      image: 'assets/Two_tier_chocolate_cake.jpeg'
-    },
-
-    // {
-    //   name: 'KitKat Special',
-    //   category: 'Designer Cake',
-    //   image: 'assets/cake4.jpg'
-    // },
-
-    {
-      name: 'Butterscotch',
-      category: 'Classic Cake',
-      image: 'assets/car.jpeg'
-    },
-
-    {
-      name: 'Black Forest',
-      category: 'Eggless Cake',
-      image: 'assets/blue.jpeg'
-    }
-
+  products: Product[] = [
+    { id: 1, name: 'Chocolate Truffle', price: 350, image: 'assets/cakes/chocolate_flower_350.jpeg' },
+    { id: 2, name: 'Red Velvet', price: 350, image: 'assets/cakes/heart_350.jpeg' },
+    { id: 3, name: 'Butterscotch', price: 600, image: 'assets/cakes/pure_chocolate_600.jpeg' },
+    { id: 4, name: 'Black Forest', price: 700, image: 'assets/cakes/double_layer_700.jpeg' }
   ];
 
   ngOnInit(): void {
-
-    this.startAutoSlide();
-
+    this.sliderTimer = setInterval(() => {
+      this.currentSlide = (this.currentSlide + 1) % this.heroSlides.length;
+    }, 5000);
   }
 
   ngOnDestroy(): void {
-
-    clearInterval(this.autoSlide);
-
+    if (this.sliderTimer) clearInterval(this.sliderTimer);
+    if (this.toastTimer) clearTimeout(this.toastTimer);
   }
 
-  toggleMenu(): void {
+  selectSlide(index: number): void { this.currentSlide = index; }
 
-    this.menuOpen = !this.menuOpen;
+  toggleMenu(): void { this.menuOpen = !this.menuOpen; }
 
+  addToCart(product: Product): void {
+    this.cartCount++;
+    this.showToast(`${product.name} added to cart`);
   }
 
-  startAutoSlide(): void {
+  orderNow(): void { this.showToast('Opening cakes menu...'); }
+  openProduct(id: number): void { this.showToast(`Opening product #${id}`); }
+  openCart(): void { this.showToast('Opening cart...'); }
+  openProfile(): void { this.showToast('Opening profile...'); }
+  search(): void { this.showToast('Search opened'); }
+  selectCategory(name: string): void { this.showToast(`Showing ${name} cakes`); }
+  viewAllCategories(): void { this.showToast('Opening all categories...'); }
+  viewAllProducts(): void { this.showToast('Opening all cakes...'); }
+  openOrders(): void { this.showToast('Opening your orders...'); }
+  aboutUs(): void { this.showToast('Opening About Us...'); }
+  contactUs(): void { this.showToast('Opening Contact Us...'); }
 
-    this.autoSlide = setInterval(() => {
-
-      this.nextSlide();
-
-    }, 3000);
-
+  goHome(): void {
+    this.menuOpen = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  restartAutoSlide(): void {
-
-    clearInterval(this.autoSlide);
-
-    this.startAutoSlide();
-
-  }
-
-  nextSlide(): void {
-
-    this.currentIndex++;
-
-    if (this.currentIndex >= this.cakes.length) {
-
-      this.currentIndex = 0;
-
-    }
-
-    this.restartAutoSlide();
-
-  }
-
-  previousSlide(): void {
-
-    this.currentIndex--;
-
-    if (this.currentIndex < 0) {
-
-      this.currentIndex = this.cakes.length - 1;
-
-    }
-
-    this.restartAutoSlide();
-
-  }
-
-  goToSlide(index: number): void {
-
-    this.currentIndex = index;
-
-    this.restartAutoSlide();
-
-  }
-
-  get leftIndex(): number {
-
-    return this.currentIndex === 0
-      ? this.cakes.length - 1
-      : this.currentIndex - 1;
-
-  }
-
-  get rightIndex(): number {
-
-    return this.currentIndex === this.cakes.length - 1
-      ? 0
-      : this.currentIndex + 1;
-
-  }
-
-  goToOrder(): void {
-
-    const hero = document.querySelector('.hero-section');
-
-    hero?.classList.add('fade-out');
-
-    setTimeout(() => {
-
-      this.router.navigate(['/order']);
-
-    }, 600);
+  private showToast(message: string): void {
+    this.toastMessage = message;
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => this.toastMessage = '', 2200);
   }
 }
