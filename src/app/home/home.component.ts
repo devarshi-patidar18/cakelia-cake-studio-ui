@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Product {
   id: number;
@@ -20,6 +21,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   cartCount = 0;
   menuOpen = false;
   toastMessage = '';
+
+  constructor(private rotuer:Router){}
 
   private sliderTimer?: ReturnType<typeof setInterval>;
   private toastTimer?: ReturnType<typeof setTimeout>;
@@ -72,7 +75,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   openProfile(): void { this.showToast('Opening profile...'); }
   search(): void { this.showToast('Search opened'); }
   selectCategory(name: string): void { this.showToast(`Showing ${name} cakes`); }
-  viewAllCategories(): void { this.showToast('Opening all categories...'); }
+  viewAllCategories(): void { 
+    this.showToast('Opening all categories...'); 
+    this.rotuer.navigate(["/products"]);
+  }
   viewAllProducts(): void { this.showToast('Opening all cakes...'); }
   openOrders(): void { this.showToast('Opening your orders...'); }
   aboutUs(): void { this.showToast('Opening About Us...'); }

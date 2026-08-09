@@ -1,0 +1,185 @@
+<div class="cakes-page">
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <button class="icon-button back-button" type="button"
+            aria-label="Go back" (click)="goBack()">
+      <svg viewBox="0 0 24 24">
+        <path d="M19 12H5"></path>
+        <path d="M11 18l-6-6 6-6"></path>
+      </svg>
+    </button>
+
+    <h1>Cakes</h1>
+
+    <div class="header-actions">
+      <button class="icon-button" type="button"
+              aria-label="Search" (click)="openSearch()">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="6.5"></circle>
+          <path d="M16 16l5 5"></path>
+        </svg>
+      </button>
+
+      <button class="icon-button cart-button" type="button"
+              aria-label="Cart" (click)="openCart()">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 4h2l2.2 10a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 1.9-1.4L21 8H6"></path>
+          <circle cx="9" cy="20" r="1.2"></circle>
+          <circle cx="18" cy="20" r="1.2"></circle>
+        </svg>
+        <span class="cart-count">{{ cartCount }}</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- FILTER BAR -->
+  <section class="filter-section">
+    <div class="category-filters">
+      <button
+        *ngFor="let category of categories"
+        type="button"
+        class="filter-chip"
+        [class.active]="selectedCategory === category"
+        (click)="selectCategory(category)">
+        {{ category }}
+      </button>
+
+      <button class="filter-chip sort-chip"
+              type="button"
+              (click)="toggleSortMenu()">
+        {{ selectedSort }}
+        <svg viewBox="0 0 24 24">
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="sort-menu" *ngIf="sortMenuOpen">
+      <button *ngFor="let option of sortOptions"
+              type="button"
+              [class.selected]="selectedSort === option"
+              (click)="selectSort(option)">
+        {{ option }}
+      </button>
+    </div>
+  </section>
+
+  <!-- PRODUCT GRID -->
+  <main class="product-section">
+
+    <div class="result-row">
+      <span>{{ filteredProducts.length }} cakes</span>
+
+      <button type="button" class="clear-filter"
+              *ngIf="selectedCategory !== 'All'"
+              (click)="selectCategory('All')">
+        Clear filter
+      </button>
+    </div>
+
+    <div class="product-grid">
+
+      <article class="product-card"
+               *ngFor="let product of filteredProducts">
+
+        <div class="product-image-wrapper">
+
+          <button class="favorite-button"
+                  type="button"
+                  [class.favorite]="product.favorite"
+                  [attr.aria-label]="product.favorite ? 'Remove from wishlist' : 'Add to wishlist'"
+                  (click)="toggleFavorite(product)">
+            <svg viewBox="0 0 24 24">
+              <path d="M20.8 8.8c0 5.5-8.8 10.5-8.8 10.5S3.2 14.3 3.2 8.8A4.8 4.8 0 0 1 12 6.2a4.8 4.8 0 0 1 8.8 2.6z"></path>
+            </svg>
+          </button>
+
+          <button class="image-button"
+                  type="button"
+                  (click)="openProduct(product.id)">
+            <img [src]="product.image"
+                 [alt]="product.name"
+                 loading="lazy">
+          </button>
+
+          <span class="offer-badge" *ngIf="product.discount">
+            {{ product.discount }}% OFF
+          </span>
+        </div>
+
+        <button class="product-name"
+                type="button"
+                (click)="openProduct(product.id)">
+          {{ product.name }}
+        </button>
+
+        <div class="price-row">
+          <!-- <span class="price">₹{{ product.price }}</span> -->
+          <span class="old-price" *ngIf="product.oldPrice">
+            <!-- ₹{{ product.oldPrice }} -->
+          </span>
+        </div>
+
+      </article>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredProducts.length === 0">
+      <div class="empty-icon">🍰</div>
+      <h2>No cakes found</h2>
+      <p>Try another category.</p>
+      <button type="button" (click)="selectCategory('All')">
+        View All Cakes
+      </button>
+    </div>
+
+  </main>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay"
+       *ngIf="searchOpen"
+       (click)="closeSearch()">
+
+    <div class="search-box"
+         (click)="$event.stopPropagation()">
+
+      <div class="search-input-wrapper">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="6.5"></circle>
+          <path d="M16 16l5 5"></path>
+        </svg>
+
+        <input
+          #searchInput
+          type="search"
+          placeholder="Search cakes..."
+          [(ngModel)]="searchText"
+          (input)="applySearch()"
+          autofocus>
+
+        <button type="button" (click)="closeSearch()">×</button>
+      </div>
+
+      <div class="search-results" *ngIf="searchText">
+        <button *ngFor="let product of searchResults"
+                type="button"
+                (click)="openProduct(product.id)">
+          <img [src]="product.image" [alt]="product.name">
+          <span>{{ product.name }}</span>
+          <!-- <strong>₹{{ product.price }}</strong> -->
+        </button>
+
+        <p *ngIf="searchResults.length === 0">
+          No matching cake found.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" *ngIf="toastMessage">
+    {{ toastMessage }}
+  </div>
+
+</div>

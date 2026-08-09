@@ -6,13 +6,13 @@
             <p class="hero-subtitle">Made with love,<br>just for you.</p>
             <button class="primary-btn" type="button" (click)="orderNow()">ORDER NOW</button>
         </div>
-        <div class="hero-image-wrap">
+        <!-- <div class="hero-image-wrap">
             <img class="hero-cake" [src]="heroSlides[currentSlide].image" [alt]="heroSlides[currentSlide].alt">
-        </div>
-        <div class="slider-dots">
+        </div> -->
+        <!-- <div class="slider-dots">
             <button *ngFor="let slide of heroSlides; let i = index" type="button" [class.active]="i === currentSlide"
                 (click)="selectSlide(i)" [attr.aria-label]="'Slide ' + (i + 1)"></button>
-        </div>
+        </div> -->
     </section>
 
     <section class="section-block">
