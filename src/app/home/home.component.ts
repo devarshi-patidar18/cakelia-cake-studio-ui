@@ -41,8 +41,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   products: Product[] = [
     { id: 1, name: 'Chocolate Truffle', price: 350, image: 'assets/cakes/chocolate_flower_350.jpeg' },
     { id: 2, name: 'Red Velvet', price: 350, image: 'assets/cakes/heart_350.jpeg' },
-    { id: 3, name: 'Butterscotch', price: 600, image: 'assets/cakes/pure_chocolate_600.jpeg' },
-    { id: 4, name: 'Black Forest', price: 700, image: 'assets/cakes/double_layer_700.jpeg' }
+    { id: 3, name: 'Black Forest', price: 600, image: 'assets/cakes/pure_chocolate_600.jpeg' },
+    { id: 4, name: 'Black Forest', price: 700, image: 'assets/cakes/double_layer_700.jpeg' },
+    // { id: 5, name: 'Black Forest', price: 700, image: 'assets/cakes/double_layer_700.jpeg' }
   ];
 
   ngOnInit(): void {
