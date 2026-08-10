@@ -273,36 +273,6 @@ button {
     color: white
 }
 
-.footer {
-    padding: 42px 5.2%;
-    background: #fff1f5;
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    align-items: center
-}
-
-.footer strong {
-    color: #ed3b73;
-    font-size: 20px
-}
-
-.footer p {
-    margin: 8px 0 0;
-    color: #555
-}
-
-.footer-links {
-    display: flex;
-    gap: 20px
-}
-
-.footer-links button {
-    border: 0;
-    background: transparent;
-    cursor: pointer
-}
-
 .toast {
     position: fixed;
     right: 25px;
