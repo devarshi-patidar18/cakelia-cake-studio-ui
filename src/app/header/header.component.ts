@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +10,15 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  @Input() variant: 'default' | 'page' = 'default';
+  @Input() pageTitle = '';
+  @Input() cartCount = 0;
+
+  @Output() back = new EventEmitter<void>();
+  @Output() searchClicked = new EventEmitter<void>();
+  @Output() cartClicked = new EventEmitter<void>();
+
   menuOpen = false;
-  cartCount = 0;
   toastMessage = '';
 
   private toastTimer?: ReturnType<typeof setTimeout>;
@@ -26,6 +33,28 @@ export class HeaderComponent {
     this.menuOpen = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.router.navigate(['/']);
+  }
+
+  onBack(): void {
+    this.back.emit();
+  }
+
+  onSearch(): void {
+    if (this.variant === 'page') {
+      this.searchClicked.emit();
+      return;
+    }
+
+    this.search();
+  }
+
+  onCart(): void {
+    if (this.variant === 'page') {
+      this.cartClicked.emit();
+      return;
+    }
+
+    this.openCart();
   }
 
   search(): void {

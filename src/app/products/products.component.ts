@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../header/header.component';
+import { Router } from '@angular/router';
 
 interface CakeProduct {
   id: number;
@@ -16,11 +18,13 @@ interface CakeProduct {
 @Component({
   selector: 'app-cakes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+
+  constructor(private router:Router){}
 
   cartCount = 3;
 
@@ -84,9 +88,9 @@ export class ProductsComponent implements OnInit {
     },
     {
       id: 5,
-      name: 'Pineapple',
+      name: 'Chocolate',
       price: 450,
-      image: 'assets/images/cakelia/pineapple.jpg',
+      image: 'assets/cakes/chocolate_pure.jpeg',
       category: 'Anniversary',
       favorite: false
     },
@@ -163,6 +167,7 @@ export class ProductsComponent implements OnInit {
 
   openProduct(productId: number): void {
     this.showToast(`Opening cake #${productId}`);
+    this.router.navigate(["/productdetails"]);
 
     /*
      * When routing is ready:

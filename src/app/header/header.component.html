@@ -1,49 +1,82 @@
-<header class="top-header">
-  <button class="icon-btn menu-btn" type="button" aria-label="Open menu" (click)="toggleMenu()">
-    <span class="hamburger"><span></span><span></span><span></span></span>
-  </button>
-
-  <button class="brand" type="button" (click)="goHome()">
-    <span class="brand-cake"></span><span class="brand-name">Cakelia</span>
-  </button>
-
-  <div class="header-actions">
-    <button class="icon-btn" type="button" aria-label="Search" (click)="search()">
-      <svg viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="6.5" />
-        <path d="M16 16l5 5" />
-      </svg>
+﻿<ng-container *ngIf="variant === 'default'; else pageHeader">
+  <header class="top-header">
+    <button class="icon-btn menu-btn" type="button" aria-label="Open menu" (click)="toggleMenu()">
+      <span class="hamburger"><span></span><span></span><span></span></span>
     </button>
-    <button class="icon-btn cart-button" type="button" aria-label="Cart" (click)="openCart()">
-      <svg viewBox="0 0 24 24">
-        <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L20.5 8H6" />
-        <circle cx="9" cy="20" r="1.2" />
-        <circle cx="18" cy="20" r="1.2" />
-      </svg>
-      <span class="cart-badge">{{ cartCount }}</span>
-    </button>
-    <button class="icon-btn" type="button" aria-label="Profile" (click)="openProfile()">
-      <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4.5 21c.7-4 3.1-6 7.5-6s6.8 2 7.5 6" />
-      </svg>
-    </button>
-  </div>
-</header>
 
-<div class="menu-overlay" *ngIf="menuOpen" (click)="toggleMenu()">
-  <nav class="side-menu" (click)="$event.stopPropagation()">
-    <div class="side-menu-header">
-      <span class="menu-title">Cakelia</span>
-      <button class="close-btn" (click)="toggleMenu()">×</button>
+    <button class="brand" type="button" (click)="goHome()">
+      <span class="brand-cake"></span><span class="brand-name">Cakelia</span>
+    </button>
+
+    <div class="header-actions">
+      <button class="icon-btn" type="button" aria-label="Search" (click)="onSearch()">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="6.5" />
+          <path d="M16 16l5 5" />
+        </svg>
+      </button>
+      <button class="icon-btn cart-button" type="button" aria-label="Cart" (click)="onCart()">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L20.5 8H6" />
+          <circle cx="9" cy="20" r="1.2" />
+          <circle cx="18" cy="20" r="1.2" />
+        </svg>
+        <span class="cart-badge">{{ cartCount }}</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Profile" (click)="openProfile()">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4.5 21c.7-4 3.1-6 7.5-6s6.8 2 7.5 6" />
+        </svg>
+      </button>
     </div>
-    <button (click)="goHome()">Home</button>
-    <button (click)="viewAllCategories()">Categories</button>
-    <button (click)="viewAllProducts()">Cakes</button>
-    <button (click)="openOrders()">My Orders</button>
-    <button (click)="openProfile()">Profile</button>
-    <button (click)="contactUs()">Contact Us</button>
-  </nav>
-</div>
+  </header>
+
+  <div class="menu-overlay" *ngIf="menuOpen" (click)="toggleMenu()">
+    <nav class="side-menu" (click)="$event.stopPropagation()">
+      <div class="side-menu-header">
+        <span class="menu-title">Cakelia</span>
+        <button class="close-btn" (click)="toggleMenu()">×</button>
+      </div>
+      <button (click)="goHome()">Home</button>
+      <button (click)="viewAllCategories()">Categories</button>
+      <button (click)="viewAllProducts()">Cakes</button>
+      <button (click)="openOrders()">My Orders</button>
+      <button (click)="openProfile()">Profile</button>
+      <button (click)="contactUs()">Contact Us</button>
+    </nav>
+  </div>
+</ng-container>
+
+<ng-template #pageHeader>
+  <header class="page-header">
+    <button class="icon-button back-button" type="button"
+            aria-label="Go back" (click)="onBack()">
+      <svg viewBox="0 0 24 24">
+        <path d="M19 12H5"></path>
+        <path d="M11 18l-6-6 6-6"></path>
+      </svg>
+    </button>
+
+    <h1>{{ pageTitle }}</h1>
+
+    <div class="header-actions">
+      <button class="icon-button" type="button" aria-label="Search" (click)="onSearch()">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="6.5"></circle>
+          <path d="M16 16l5 5"></path>
+        </svg>
+      </button>
+      <button class="icon-button cart-button" type="button" aria-label="Cart" (click)="onCart()">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 4h2l2.2 10a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 1.9-1.4L21 8H6"></path>
+          <circle cx="9" cy="20" r="1.2"></circle>
+          <circle cx="18" cy="20" r="1.2"></circle>
+        </svg>
+        <span class="cart-count">{{ cartCount }}</span>
+      </button>
+    </div>
+  </header>
+</ng-template>
 
 <div class="toast" *ngIf="toastMessage">{{ toastMessage }}</div>

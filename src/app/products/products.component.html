@@ -1,37 +1,14 @@
 <div class="cakes-page">
 
   <!-- PAGE HEADER -->
-  <header class="page-header">
-    <button class="icon-button back-button" type="button"
-            aria-label="Go back" (click)="goBack()">
-      <svg viewBox="0 0 24 24">
-        <path d="M19 12H5"></path>
-        <path d="M11 18l-6-6 6-6"></path>
-      </svg>
-    </button>
-
-    <h1>Cakes</h1>
-
-    <div class="header-actions">
-      <button class="icon-button" type="button"
-              aria-label="Search" (click)="openSearch()">
-        <svg viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="6.5"></circle>
-          <path d="M16 16l5 5"></path>
-        </svg>
-      </button>
-
-      <button class="icon-button cart-button" type="button"
-              aria-label="Cart" (click)="openCart()">
-        <svg viewBox="0 0 24 24">
-          <path d="M3 4h2l2.2 10a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 1.9-1.4L21 8H6"></path>
-          <circle cx="9" cy="20" r="1.2"></circle>
-          <circle cx="18" cy="20" r="1.2"></circle>
-        </svg>
-        <span class="cart-count">{{ cartCount }}</span>
-      </button>
-    </div>
-  </header>
+  <app-header
+    variant="page"
+    pageTitle="Cakes"
+    [cartCount]="cartCount"
+    (back)="goBack()"
+    (searchClicked)="openSearch()"
+    (cartClicked)="openCart()"
+  ></app-header>
 
   <!-- FILTER BAR -->
   <section class="filter-section">
