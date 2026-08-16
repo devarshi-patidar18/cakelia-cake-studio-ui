@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   menuOpen = false;
   toastMessage = '';
 
-  constructor(private rotuer:Router){}
+  constructor(private rotuer: Router) { }
 
   private sliderTimer?: ReturnType<typeof setInterval>;
   private toastTimer?: ReturnType<typeof setTimeout>;
@@ -36,9 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   categories = [
     { name: 'Birthday', icon: 'assets/icons/cake_icon1.jpeg' },
     { name: 'Anniversary', icon: 'assets/icons/cake_icon2.jpeg' },
-    { name: 'Chocolate', icon: 'assets/icons/cake_icon3.jpeg' },
-    { name: 'Custom Cake', icon: 'assets/icons/cake_icon4.jpeg' },
-    { name: 'More', icon: '' }
+    { name: 'Brownies', icon: 'assets/icons/brownie_icon.png' },
+    { name: 'Custom Cake', icon: 'assets/icons/cake_icon4.jpeg' }
   ];
 
   products: Product[] = [
@@ -69,14 +68,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showToast(`${product.name} added to cart`);
   }
 
-  orderNow(): void { this.showToast('Opening cakes menu...'); }
+  orderNow(): void { 
+    this.showToast('Opening cakes menu...'); 
+    this.rotuer.navigate(["/order"]);
+  }
   openProduct(id: number): void { this.showToast(`Opening product #${id}`); }
   openCart(): void { this.showToast('Opening cart...'); }
   openProfile(): void { this.showToast('Opening profile...'); }
   search(): void { this.showToast('Search opened'); }
   selectCategory(name: string): void { this.showToast(`Showing ${name} cakes`); }
-  viewAllCategories(): void { 
-    this.showToast('Opening all categories...'); 
+  viewAllCategories(): void {
+    this.showToast('Opening all categories...');
     this.rotuer.navigate(["/products"]);
   }
   viewAllProducts(): void { this.showToast('Opening all cakes...'); }

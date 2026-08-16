@@ -23,8 +23,8 @@
             <button class="category-card" type="button" *ngFor="let category of categories"
                 (click)="selectCategory(category.name)">
                 <!-- <span class="category-icon" [innerHTML]="category.icon"></span> -->
-                <img [src]="category.icon" [alt]="category.name" loading="lazy">
-                <span>{{ category.name }}</span>
+                <img style="width:63%" [src]="category.icon" [alt]="category.name" loading="lazy">
+                <strong>{{ category.name }}</strong>
             </button>
         </div>
     </section>

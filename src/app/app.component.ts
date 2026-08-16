@@ -1,21 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { environment } from '../environments/environment';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
+import { LoaderService } from './services/loader.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  standalone: true,
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'cakelia-cake-studio-ui';
   private readonly visitEmailSentKey = 'cakelia-visit-email-sent';
 
   ngOnInit(): void {
     // void this.sendVisitEmail();
+  }
+
+  private routerSub: Subscription | undefined;
+  private hideTimeout: any;
+
+  constructor(
+    private router: Router,
+    public loaderService: LoaderService
+  ) {
+    this.routerSub = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (this.hideTimeout) {
+          clearTimeout(this.hideTimeout);
+          this.hideTimeout = undefined;
+        }
+        this.loaderService.show();
+      }
+
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this.hideTimeout = setTimeout(() => this.loaderService.hide(), 1000);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSub) {
+      this.routerSub.unsubscribe();
+    }
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+    }
   }
 
   private async sendVisitEmail(): Promise<void> {

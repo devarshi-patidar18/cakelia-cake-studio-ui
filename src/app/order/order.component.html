@@ -1,256 +1,76 @@
-<div class="order-container">
+<div class="product-page">
+  <header class="product-header">
+    <button class="header-icon" (click)="goBack()" aria-label="Back">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/></svg>
+    </button>
+    <h1>Product Details</h1>
+    <button class="header-icon cart-button" (click)="openCart()" aria-label="Cart">
+      <svg viewBox="0 0 24 24"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L20.5 8H6"/><circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg>
+      <span>{{cartCount}}</span>
+    </button>
+  </header>
 
-    <div class="banner">
-        <h1>Order Your Dream Cake 🎂</h1>
+  <main class="product-container">
+    <section class="gallery">
+      <div class="main-image">
+        <button class="wishlist" [class.active]="favorite" (click)="toggleWishlist()">♡</button>
+        <button class="gallery-arrow left" *ngIf="images.length>1" (click)="previousImage()">‹</button>
+        <img [src]="images[currentImage]" [alt]="product.name">
+        <button class="gallery-arrow right" *ngIf="images.length>1" (click)="nextImage()">›</button>
+      </div>
+      <div class="dots">
+        <button *ngFor="let image of images;let i=index" [class.active]="i===currentImage" (click)="selectImage(i)"></button>
+      </div>
+      <div class="thumbnails" *ngIf="images.length>1">
+        <button *ngFor="let image of images;let i=index" [class.active]="i===currentImage" (click)="selectImage(i)">
+          <img [src]="image" [alt]="product.name">
+        </button>
+      </div>
+    </section>
 
-        <p>
-            Freshly baked with love ❤️
-        </p>
-    </div>
+    <section class="details">
+      <div class="title-row">
+        <div><h2>{{product.name}}</h2><div class="price">₹{{unitPrice}}</div></div>
+        <span class="available" *ngIf="product.available">Available</span>
+      </div>
 
-    <form (ngSubmit)="orderNow()">
+      <p class="description">{{product.description}}</p>
 
-        <div class="card">
-
-            <h2>Cake Details</h2>
-
-            <div class="grid">
-
-                <div>
-
-                    <label>Cake Type</label>
-
-                    <select [(ngModel)]="cakeType" name="cakeType">
-                        <option>Birthday Cake</option>
-                        <option>Anniversary Cake</option>
-                        <option>Wedding Cake</option>
-                        <option>Theme Cake</option>
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <label>Flavour</label>
-
-                    <select [(ngModel)]="flavour" name="flavour">
-
-                        <option>Chocolate</option>
-                        <option>Vanilla</option>
-                        <option>Butterscotch</option>
-                        <option>Red Velvet</option>
-                        <option>Pineapple</option>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <label>Weight</label>
-
-                    <select [(ngModel)]="weight" name="weight" (change)="updatePrice()">
-
-                        <option value="500 gm">500 gm</option>
-                        <option value="1 Kg">1 Kg</option>
-                        <option value="1.5 Kg">1.5 Kg</option>
-                        <option value="2 Kg">2 Kg</option>
-                        <option value="3 Kg">3 Kg</option>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <label>Shape</label>
-
-                    <select [(ngModel)]="shape" name="shape">
-
-                        <option>Round</option>
-                        <option>Square</option>
-                        <option>Heart</option>
-                        <option>Rectangle</option>
-
-                    </select>
-
-                </div>
-                <!-- <div> -->
-
-
-                <div>
-                    <label>Occasion</label>
-                    <select [(ngModel)]="occasion" name="occasion">
-                        <option>Birthday</option>
-                        <option>Anniversary</option>
-                        <option>Wedding</option>
-                        <option>Baby Shower</option>
-                        <option>Engagement</option>
-                        <option>Other</option>
-
-                    </select>
-                </div>
-
-            </div>
-
+      <div class="option">
+        <label>Size <b>{{selectedSize}}</b></label>
+        <div class="options">
+          <button *ngFor="let size of sizes" [class.selected]="selectedSize===size" (click)="selectSize(size)">{{size}}</button>
         </div>
+      </div>
 
-
-
-        <div class="card">
-
-            <h2>Delivery Details</h2>
-
-            <div class="grid">
-                <div class="field-group">
-                    <label>Customer Name</label>
-                    <input type="text" [(ngModel)]="customerName" name="customerName" placeholder="Customer Name">
-                </div>
-
-                <div class="field-group">
-                    <label>Mobile Number</label>
-                    <input type="tel" [(ngModel)]="mobileNumber" name="mobileNumber" placeholder="Mobile Number">
-                </div>
-
-                <div class="field-group">
-                    <label>Delivery Date</label>
-                    <input type="date" [(ngModel)]="deliveryDate" name="deliveryDate">
-                </div>
-
-                <div class="field-group">
-                    <label>Delivery Time</label>
-                    <div class="time-picker">
-                        <select class="time-select" [(ngModel)]="deliveryHour" name="deliveryHour">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>04</option>
-                            <option>05</option>
-                            <option>06</option>
-                            <option>07</option>
-                            <option>08</option>
-                            <option>09</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                        </select>
-                        <span>:</span>
-                        <select class="time-select" [(ngModel)]="deliveryMinute" name="deliveryMinute">
-                            <option>00</option>
-                            <option>15</option>
-                            <option>30</option>
-                            <option>45</option>
-                        </select>
-                        <select class="time-select" [(ngModel)]="deliveryPeriod" name="deliveryPeriod">
-                            <option>AM</option>
-                            <option>PM</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field-group full-width">
-                <label>Delivery Address</label>
-                <textarea rows="4" [(ngModel)]="deliveryAddress" name="deliveryAddress" placeholder="Delivery Address"></textarea>
-            </div>
-
+      <div class="option">
+        <label>Flavor <b>{{selectedFlavor}}</b></label>
+        <div class="options">
+          <button *ngFor="let flavor of flavors" [class.selected]="selectedFlavor===flavor" (click)="selectFlavor(flavor)">{{flavor}}</button>
         </div>
+      </div>
 
-        <div class="card">
-
-            <h2>Customisation</h2>
-
-            <div class="field-group">
-                <label>Message on Cake</label>
-                <input type="text" [(ngModel)]="messageOnCake" name="messageOnCake" placeholder="Message on Cake">
-            </div>
-
-            <div class="field-group full-width">
-                <label>Describe Your Cake</label>
-                <textarea rows="5" [(ngModel)]="description" name="description" placeholder="Describe your cake"></textarea>
-            </div>
-
+      <div class="option">
+        <label>Quantity</label>
+        <div class="quantity">
+          <button (click)="decreaseQuantity()">−</button>
+          <span>{{quantity}}</span>
+          <button (click)="increaseQuantity()">+</button>
         </div>
+      </div>
 
-        <div class="price-card">
+      <div class="summary">
+        <div><span>Unit Price</span><b>₹{{unitPrice}}</b></div>
+        <div><span>Quantity</span><b>× {{quantity}}</b></div>
+        <div class="total"><span>Total</span><b>₹{{totalPrice}}</b></div>
+      </div>
+    </section>
+  </main>
 
-            <h2>Estimated Price</h2>
-            Note: Estimated price may vary based on customisation.
+  <footer class="actions">
+    <button class="add" [disabled]="!product.available" (click)="addToCart()">ADD TO CART</button>
+    <button class="buy" [disabled]="!product.available" (click)="buyNow()">BUY NOW</button>
+  </footer>
 
-            <h1>₹ {{price}}</h1>
-
-            <button type="submit">
-
-                Order Now
-
-            </button>
-
-        </div>
-
-    </form>
-
+  <div class="toast" *ngIf="toast">{{toast}}</div>
 </div>
-
-@if(showPopup){
-    <div class="popup-overlay">
-
-    <div class="popup">
-
-        <div class="success-icon">
-
-            ✓
-
-        </div>
-
-        <h2>Order Submitted Successfully!</h2>
-
-        <p>
-
-            Thank you for choosing
-            <strong>Cakelia Cake Studio</strong>.
-
-        </p>
-
-        <p>
-
-            We have received your request.
-
-            Our team will contact you shortly to confirm the details and finalize your order.
-
-            Your order will be delivered on <strong>{{deliveryDate | date:'fullDate'}}</strong> at <strong>{{deliveryHour}}:{{deliveryMinute}} {{deliveryPeriod}}</strong>.
-            Delivery Address: <strong>{{deliveryAddress}}</strong>.
-
-        </p>
-
-        <div class="order-id">
-
-            Order ID
-
-            <strong>#{{orderId}}</strong>
-
-        </div>
-
-        <div class="buttons">
-
-            <button
-                class="whatsapp-btn"
-                (click)="goWhatsapp()">
-
-                WhatsApp Us
-
-            </button>
-
-            <button
-                class="home-btn"
-                (click)="closePopup()">
-
-                Continue Shopping
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-}

@@ -1,0 +1,41 @@
+.loader-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 99999;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: rgba(255, 255, 255, 0.96);
+
+	animation: loaderFadeIn 0.15s ease-in-out;
+}
+
+.loader-content {
+	width: 180px;
+	height: 180px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.loader-video {
+	width: 100%;
+	height: 100%;
+
+	object-fit: contain;
+
+	border-radius: 20px;
+}
+
+@keyframes loaderFadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
