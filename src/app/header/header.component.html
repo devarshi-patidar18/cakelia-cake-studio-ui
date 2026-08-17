@@ -1,8 +1,19 @@
 ﻿<ng-container *ngIf="variant === 'default'; else pageHeader">
   <header class="top-header">
+    <!-- {{ this.dataStore.backToScreens.length  }} -->
+    @if(this.dataStore.backToScreens.length ==0){
+
     <button class="icon-btn menu-btn" type="button" aria-label="Open menu" (click)="toggleMenu()">
       <span class="hamburger"><span></span><span></span><span></span></span>
     </button>
+    }
+    @else{
+    <i (click)="goBack()" class="pi pi-arrow-left" style="font-size:1.2rem"></i>    
+    }
+
+    <!-- <button class="back-button" type="button"  aria-label="Go back">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/></svg>
+    </button> -->
 
     <button class="brand" type="button" (click)="goHome()">
       <span class="brand-cake"></span><span class="brand-name">Cakelia</span>
@@ -50,8 +61,7 @@
 
 <ng-template #pageHeader>
   <header class="page-header">
-    <button class="icon-button back-button" type="button"
-            aria-label="Go back" (click)="onBack()">
+    <button class="icon-button back-button" type="button" aria-label="Go back" (click)="onBack()">
       <svg viewBox="0 0 24 24">
         <path d="M19 12H5"></path>
         <path d="M11 18l-6-6 6-6"></path>

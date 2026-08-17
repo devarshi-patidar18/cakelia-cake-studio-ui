@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatastoreService } from '../services/datastore.service';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,7 @@ export class HeaderComponent {
 
   private toastTimer?: ReturnType<typeof setTimeout>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,public dataStore:DatastoreService) {}
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
@@ -37,6 +38,11 @@ export class HeaderComponent {
 
   onBack(): void {
     this.back.emit();
+  }
+
+  goBack(){
+    this.dataStore.updateScreenNavigation("",true);
+    this.router.navigate(["/"]);
   }
 
   onSearch(): void {
@@ -83,6 +89,7 @@ export class HeaderComponent {
 
   contactUs(): void {
     this.showToast('Opening Contact Us...');
+    this.router.navigate(["/aboutus"]);
   }
 
   orderNow(): void {

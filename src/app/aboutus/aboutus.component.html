@@ -1,0 +1,89 @@
+<div class="about-page">
+
+  <section class="about-hero">
+    <div class="hero-content">
+      <span class="eyebrow">WELCOME TO CAKELIA</span>
+      <h1>Made With Love,<br><span>Baked For You.</span></h1>
+      <p>Every celebration deserves something special. At Cakelia, we turn simple moments into sweet memories with freshly baked cakes, brownies and desserts.</p>
+      <div class="hero-actions">
+        <button class="primary-btn" (click)="orderNow()">ORDER NOW</button>
+        <button class="secondary-btn" (click)="contactUs()">CONTACT US</button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="cake-circle">
+        <img src="assets/images/cakelia/about/about-cake.jpg" alt="Cakelia celebration cake">
+      </div>
+      <div class="floating-card floating-card-one"><strong>100%</strong><span>Freshly Baked</span></div>
+      <div class="floating-card floating-card-two"><span>♡</span><strong>Made With Love</strong></div>
+    </div>
+  </section>
+
+  <section class="story-section section">
+    <div class="story-image">
+      <img src="assets/images/cakelia/about/our-story.jpg" alt="Freshly baked Cakelia cake">
+    </div>
+    <div class="story-content">
+      <span class="section-label">OUR STORY</span>
+      <h2>A Little Sweetness<br>Behind Every Cake</h2>
+      <p>Cakelia was created with one simple idea — to make every occasion a little sweeter. What started with a love for baking grew into a place where cakes are made especially for people and their special moments.</p>
+      <p>From birthdays and anniversaries to small celebrations at home, we carefully prepare every order with quality ingredients, attention to detail and lots of love.</p>
+      <div class="story-highlight">
+        <span class="quote-mark">“</span>
+        <div><strong>Because the best memories are often shared over cake.</strong><span>— Team Cakelia</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="values-section section">
+    <div class="section-heading">
+      <span class="section-label">WHY CAKELIA</span>
+      <h2>What Makes Us Special?</h2>
+      <p>We put the same care into every cake that we would put into one made for our own family.</p>
+    </div>
+
+    <div class="values-grid">
+      <article class="value-card" *ngFor="let value of values">
+        <div class="value-icon">{{ value.icon }}</div>
+        <h3>{{ value.title }}</h3>
+        <p>{{ value.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="products-section section">
+    <div class="section-heading">
+      <span class="section-label">OUR SPECIALITIES</span>
+      <h2>Something Sweet For Every Occasion</h2>
+    </div>
+
+    <div class="speciality-grid">
+      <button class="speciality-card" *ngFor="let item of specialities" (click)="openCategory(item.route)">
+        <div class="speciality-image"><img [src]="item.image" [alt]="item.title"></div>
+        <div class="speciality-info">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+          <span>Explore →</span>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="stat"><strong>{{ stats.cakes }}</strong><span>Cakes Created</span></div>
+    <div class="stat"><strong>{{ stats.customOrders }}</strong><span>Custom Orders</span></div>
+    <div class="stat"><strong>{{ stats.happyCustomers }}</strong><span>Happy Customers</span></div>
+    <div class="stat"><strong>{{ stats.love }}</strong><span>Love In Every Order</span></div>
+  </section>
+
+  <section class="cta-section">
+    <div>
+      <span class="section-label">LET'S CELEBRATE</span>
+      <h2>Have A Sweet Moment<br>Coming Up?</h2>
+      <p>Let Cakelia make it a little more special.</p>
+    </div>
+    <button class="primary-btn" (click)="orderNow()">ORDER YOUR CAKE</button>
+  </section>
+
+</div>

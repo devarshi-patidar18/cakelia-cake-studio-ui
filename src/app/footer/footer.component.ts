@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatastoreService } from '../services/datastore.service';
 
 @Component({
   selector: 'app-footer',
@@ -14,7 +15,7 @@ export class FooterComponent {
 
   private toastTimer?: ReturnType<typeof setTimeout>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,public dataStore: DatastoreService) {}
 
   aboutUs(): void {
     this.showToast('Opening About Us...');

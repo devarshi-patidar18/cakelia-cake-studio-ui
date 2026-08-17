@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatastoreService } from '../services/datastore.service';
 
 interface Product {
   id: number;
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   menuOpen = false;
   toastMessage = '';
 
-  constructor(private rotuer: Router) { }
+  constructor(private rotuer: Router,public dataStore:DatastoreService) { }
 
   private sliderTimer?: ReturnType<typeof setInterval>;
   private toastTimer?: ReturnType<typeof setTimeout>;
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   categories = [
     { name: 'Birthday', icon: 'assets/icons/cake_icon1.jpeg' },
     { name: 'Anniversary', icon: 'assets/icons/cake_icon2.jpeg' },
-    { name: 'Brownies', icon: 'assets/icons/brownie_icon.png' },
+    { name: 'Brownies', icon: 'assets/icons/brownie_icon.jpeg' },
     { name: 'Custom Cake', icon: 'assets/icons/cake_icon4.jpeg' }
   ];
 
@@ -70,6 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   orderNow(): void { 
     this.showToast('Opening cakes menu...'); 
+    // this.dataStore.updateScreenNavigation("/order",false);
     this.rotuer.navigate(["/order"]);
   }
   openProduct(id: number): void { this.showToast(`Opening product #${id}`); }

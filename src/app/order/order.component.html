@@ -1,76 +1,235 @@
-<div class="product-page">
-  <header class="product-header">
-    <button class="header-icon" (click)="goBack()" aria-label="Back">
+<div class="order-page">
+  <!-- <section class="page-intro">
+    <button class="back-button" type="button" (click)="goBack()" aria-label="Go back">
       <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/></svg>
     </button>
-    <h1>Product Details</h1>
-    <button class="header-icon cart-button" (click)="openCart()" aria-label="Cart">
-      <svg viewBox="0 0 24 24"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L20.5 8H6"/><circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg>
-      <span>{{cartCount}}</span>
-    </button>
-  </header>
+    <div>
+      <h1>Order Now</h1>
+      <p>Fill in the details below to place your order</p>
+    </div>
+  </section> -->
 
-  <main class="product-container">
-    <section class="gallery">
-      <div class="main-image">
-        <button class="wishlist" [class.active]="favorite" (click)="toggleWishlist()">♡</button>
-        <button class="gallery-arrow left" *ngIf="images.length>1" (click)="previousImage()">‹</button>
-        <img [src]="images[currentImage]" [alt]="product.name">
-        <button class="gallery-arrow right" *ngIf="images.length>1" (click)="nextImage()">›</button>
-      </div>
-      <div class="dots">
-        <button *ngFor="let image of images;let i=index" [class.active]="i===currentImage" (click)="selectImage(i)"></button>
-      </div>
-      <div class="thumbnails" *ngIf="images.length>1">
-        <button *ngFor="let image of images;let i=index" [class.active]="i===currentImage" (click)="selectImage(i)">
-          <img [src]="image" [alt]="product.name">
+  <div class="order-layout">
+    <div class="form-column">
+
+      <section class="form-card">
+        <div class="card-heading" (click)="toggleCard(1)">
+          <div class="heading-left">
+            <span class="heading-icon"><svg viewBox="0 0 24 24">
+                <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg></span>
+            <h2>Delivery Address</h2>
+          </div>
+          <!-- <button class="change-button" type="button" (click)="changeAddress()">Change</button> -->
+          @if(cardExpanded==1){
+          <i class="pi pi-angle-up" style="font-size:1.5rem"></i>
+          }
+          @else{
+          <i class="pi pi-angle-down" style="font-size:1.5rem"></i>
+          }
+        </div>
+
+        @if(cardExpanded==1){
+        <div class="form-grid two-columns" style="margin-top:8px">
+          <div class="field"><label>Full Name</label><input [(ngModel)]="address.fullName" type="text"
+              placeholder="Enter full name"></div>
+          <div class="field"><label>Phone Number</label><input [(ngModel)]="address.phone" type="tel" maxlength="10"
+              placeholder="Enter phone number"></div>
+        </div>
+
+        <div class="field"><label>House / Flat / Building</label><input [(ngModel)]="address.house" type="text"
+            placeholder="House / Flat / Building"></div>
+        <div class="field"><label>Area / Street</label><input [(ngModel)]="address.area" type="text"
+            placeholder="Area / Street"></div>
+
+        <div class="form-grid location-grid">
+          <div class="field"><label>City</label><input [(ngModel)]="address.city" type="text" placeholder="City"></div>
+          <div class="field"><label>State</label><select [(ngModel)]="address.state">
+              <option value="">Select State</option>
+              <option>Madhya Pradesh</option>
+              <option>Maharashtra</option>
+              <option>Rajasthan</option>
+              <option>Gujarat</option>
+              <option>Delhi</option>
+            </select></div>
+          <div class="field"><label>Pincode</label><input [(ngModel)]="address.pincode" maxlength="6" type="text"
+              placeholder="Pincode"></div>
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" [(ngModel)]="address.saveAddress">
+          <span class="custom-checkbox"></span>
+          <span>Save this address for future use</span>
+        </label>
+        }
+      </section>
+
+      <section class="form-card">
+        <div class="card-heading simple-heading" (click)="toggleCard(2)">
+          <div class="heading-left">
+            <span class="heading-icon"><svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="16" rx="2" />
+                <path d="M16 3v4M8 3v4M3 10h18" />
+              </svg></span>
+            <h2>Delivery Date &amp; Time</h2>
+          </div>
+          @if(cardExpanded==2){
+          <i class="pi pi-angle-up" style="font-size:1.5rem"></i>
+          }
+          @else{
+          <i class="pi pi-angle-down" style="font-size:1.5rem"></i>
+          }
+        </div>
+
+        @if(cardExpanded==2){
+        <div class="form-grid two-columns" style="margin-top:8px">
+          <div class="field"><label>Delivery Date</label><input [(ngModel)]="deliveryDate" type="date"></div>
+          <div class="field"><label>Delivery Time Slot</label><select [(ngModel)]="deliverySlot">
+              <option value="">Select time slot</option>
+              <option>08:00 AM - 10:00 AM</option>
+              <option>10:00 AM - 12:00 PM</option>
+              <option>12:00 PM - 02:00 PM</option>
+              <option>02:00 PM - 04:00 PM</option>
+              <option>04:00 PM - 06:00 PM</option>
+              <option>06:00 PM - 08:00 PM</option>
+            </select></div>
+        </div>
+
+        <div class="info-note">ⓘ <span>We suggest at least 4-5 hours advance for same day delivery.</span></div>
+        }
+      </section>
+
+      <section class="form-card">
+        <div class="card-heading simple-heading" (click)="toggleCard(3)">
+          <div class="heading-left">
+            <span class="heading-icon">▱</span>
+            <h2>Order Instructions <small>(Optional)</small></h2>
+          </div>
+          @if(cardExpanded==3){
+          <i class="pi pi-angle-up" style="font-size:1.5rem"></i>
+          }
+          @else{
+          <i class="pi pi-angle-down" style="font-size:1.5rem"></i>
+          }
+        </div>
+        @if(cardExpanded==3){
+        <div class="textarea-field" style="margin-top:8px">
+          <textarea maxlength="150" [(ngModel)]="instructions"
+            placeholder="Any special instructions for your order?"></textarea>
+          <span>{{ instructions.length }}/150</span>
+        </div>
+        }
+
+      </section>
+
+      <section class="form-card">
+        <div class="card-heading simple-heading" (click)="toggleCard(4)">
+          <div class="heading-left">
+            <span class="heading-icon">▣</span>
+            <h2>Payment Method</h2>
+          </div>
+          @if(cardExpanded==4){
+          <i class="pi pi-angle-up" style="font-size:1.5rem"></i>
+          }
+          @else{
+          <i class="pi pi-angle-down" style="font-size:1.5rem"></i>
+          }
+        </div>
+
+        @if(cardExpanded==4){
+        <div class="payment-options" style="margin-top:8px">
+          <label class="payment-option" [class.selected]="paymentMethod === 'online'">
+            <input type="radio" name="payment" value="online" [(ngModel)]="paymentMethod">
+            <span class="radio"></span>
+            <div class="payment-info"><strong>Online Payment</strong><span>UPI, Cards, Net Banking, Wallets</span></div>
+            <div class="payment-icons">VISA &nbsp; ●● &nbsp; UPI</div>
+          </label>
+
+          <label class="payment-option" [class.selected]="paymentMethod === 'cod'">
+            <input type="radio" name="payment" value="cod" [(ngModel)]="paymentMethod">
+            <span class="radio"></span>
+            <div class="payment-info"><strong>Cash on Delivery</strong><span>Pay when your order is delivered</span>
+            </div>
+            <span>💵</span>
+          </label>
+
+          <label class="payment-option" [class.selected]="paymentMethod === 'wallet'">
+            <input type="radio" name="payment" value="wallet" [(ngModel)]="paymentMethod">
+            <span class="radio"></span>
+            <div class="payment-info"><strong>Wallet</strong><span>Pay using your Cakelia wallet balance</span></div>
+            <strong class="wallet-balance">₹0</strong>
+          </label>
+        </div>
+
+        <button class="place-order-button" type="button" [disabled]="isPlacingOrder" (click)="placeOrder()">
+          🔒 {{ isPlacingOrder ? 'PLACING ORDER...' : 'PLACE ORDER' }}
         </button>
-      </div>
-    </section>
+        <div class="secure-message">🛡️ Your payment information is secure with us.</div>
+        }
+      </section>
+    </div>
 
-    <section class="details">
-      <div class="title-row">
-        <div><h2>{{product.name}}</h2><div class="price">₹{{unitPrice}}</div></div>
-        <span class="available" *ngIf="product.available">Available</span>
-      </div>
-
-      <p class="description">{{product.description}}</p>
-
-      <div class="option">
-        <label>Size <b>{{selectedSize}}</b></label>
-        <div class="options">
-          <button *ngFor="let size of sizes" [class.selected]="selectedSize===size" (click)="selectSize(size)">{{size}}</button>
+    <aside class="summary-column">
+      <section class="summary-card">
+        <div class="summary-heading">
+          <div class="summary-title">🛍️ <h2>Order Summary</h2>
+          </div>
+          <button class="edit-cart" type="button" (click)="editCart()">Edit Cart</button>
         </div>
-      </div>
 
-      <div class="option">
-        <label>Flavor <b>{{selectedFlavor}}</b></label>
-        <div class="options">
-          <button *ngFor="let flavor of flavors" [class.selected]="selectedFlavor===flavor" (click)="selectFlavor(flavor)">{{flavor}}</button>
+        <div class="cart-items">
+          <div class="cart-item" *ngFor="let item of cartItems">
+            <div class="cart-image"><img [src]="item.image" [alt]="item.name"></div>
+            <div class="cart-item-details">
+              <h3>{{ item.name }}</h3>
+              <span>{{ item.size }}</span>
+              <div>₹{{ item.price }}</div>
+            </div>
+            <div class="item-right">
+              <div class="mini-quantity"><button (click)="decreaseItem(item)">−</button><span>{{ item.quantity
+                  }}</span><button (click)="increaseItem(item)">+</button></div>
+              <strong>₹{{ item.price * item.quantity }}</strong>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="option">
-        <label>Quantity</label>
-        <div class="quantity">
-          <button (click)="decreaseQuantity()">−</button>
-          <span>{{quantity}}</span>
-          <button (click)="increaseQuantity()">+</button>
+        <div class="summary-lines">
+          <div><span>Subtotal</span><strong>₹{{ subtotal }}</strong></div>
+          <div><span>Delivery Charge</span><strong>₹{{ deliveryCharge }}</strong></div>
+          <div><span>Packaging Charge</span><strong>₹{{ packagingCharge }}</strong></div>
         </div>
-      </div>
 
-      <div class="summary">
-        <div><span>Unit Price</span><b>₹{{unitPrice}}</b></div>
-        <div><span>Quantity</span><b>× {{quantity}}</b></div>
-        <div class="total"><span>Total</span><b>₹{{totalPrice}}</b></div>
-      </div>
-    </section>
-  </main>
+        <div class="total-box"><span>Total Payable</span><strong>₹{{ totalPayable }}</strong></div>
 
-  <footer class="actions">
-    <button class="add" [disabled]="!product.available" (click)="addToCart()">ADD TO CART</button>
-    <button class="buy" [disabled]="!product.available" (click)="buyNow()">BUY NOW</button>
-  </footer>
+        <div class="benefits">
+          <div class="benefit"><b>✿</b>
+            <div><strong>Freshly Baked</strong><span>Made with premium ingredients</span></div>
+          </div>
+          <div class="benefit"><b>♧</b>
+            <div><strong>On Time Delivery</strong><span>We deliver on time, every time</span></div>
+          </div>
+          <div class="benefit"><b>♡</b>
+            <div><strong>100% Secure Payment</strong><span>Your payments are safe with us</span></div>
+          </div>
+          <div class="benefit"><b>✿</b>
+            <div><strong>Happiness Guaranteed</strong><span>We ensure 100% satisfaction</span></div>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
 
-  <div class="toast" *ngIf="toast">{{toast}}</div>
+  <section class="help-card">
+    <div class="help-cake">🎂</div>
+    <div class="help-intro"><strong>Need Help?</strong><span>Our support team is here for you.</span></div>
+    <div class="help-contact"><b>⌕</b>
+      <div><strong>{{ this.dataStore.primaryContactNumber }}</strong><span>Call us anytime</span></div>
+    </div>
+    <div class="help-contact"><b>◉</b>
+      <div><strong>Chat on WhatsApp</strong><span>We reply quickly</span></div>
+    </div>
+  </section>
+
+  <div class="toast" *ngIf="toastMessage">{{ toastMessage }}</div>
 </div>

@@ -1,99 +1,123 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DatastoreService } from '../services/datastore.service';
+
+interface Address {
+  fullName: string; phone: string; house: string; area: string;
+  city: string; state: string; pincode: string; saveAddress: boolean;
+}
+
+interface CartItem {
+  id: number; name: string; size: string; price: number;
+  quantity: number; image: string;
+}
 
 @Component({
-  selector: 'app-product-details',
+  selector: 'app-order-now',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnDestroy {
-  cartCount = 3;
-  currentImage = 0;
-  selectedSize = '1 Kg';
-  selectedFlavor = 'Chocolate';
-  quantity = 1;
-  favorite = false;
-  toast = '';
-  private toastTimer?: ReturnType<typeof setTimeout>;
 
-  product = {
-    id: 1,
-    name: 'Chocolate Truffle Cake',
-    price: 650,
-    description: 'Rich chocolate sponge with chocolate mousse and ganache.',
-    available: true
+  constructor(public dataStore:DatastoreService){}
+
+  address: Address = {
+    fullName: '', phone: '', house: '', area: '',
+    city: 'Indore', state: 'Madhya Pradesh', pincode: '', saveAddress: false
   };
 
-  images = [
-    'assets/images/cakelia/products/chocolate-truffle-1.jpg',
-    'assets/images/cakelia/products/chocolate-truffle-2.jpg',
-    'assets/images/cakelia/products/chocolate-truffle-3.jpg',
-    'assets/images/cakelia/products/chocolate-truffle-4.jpg'
+  deliveryDate = '';
+  deliverySlot = '';
+  instructions = '';
+  paymentMethod = 'online';
+  isPlacingOrder = false;
+  cardExpanded = 0;
+
+  toggleCard(cardNum:number){
+    if(this.cardExpanded == cardNum){
+      this.cardExpanded = 0;
+    }
+    else {this.cardExpanded = cardNum;}
+  }
+
+  deliveryCharge = 70;
+  packagingCharge = 30;
+
+  cartItems: CartItem[] = [
+    { id: 1, name: 'Chocolate Truffle Cake', size: '1 Kg', price: 650, quantity: 1, image: 'assets/images/cakelia/chocolate-truffle.jpg' },
+    { id: 2, name: 'Red Velvet Cake', size: '0.5 Kg', price: 550, quantity: 1, image: 'assets/images/cakelia/red-velvet.jpg' },
+    { id: 3, name: 'Butterscotch Cake', size: '0.5 Kg', price: 300, quantity: 1, image: 'assets/images/cakelia/butterscotch.jpg' }
   ];
 
-  sizes = ['0.5 Kg', '1 Kg', '1.5 Kg', '2 Kg'];
-  flavors = ['Chocolate', 'Truffle', 'Dark Chocolate'];
+  toastMessage = '';
+  private toastTimer?: ReturnType<typeof setTimeout>;
 
-  get unitPrice(): number {
-    const sizeMultiplier: Record<string, number> = {
-      '0.5 Kg': .5, '1 Kg': 1, '1.5 Kg': 1.45, '2 Kg': 1.85
-    };
-    const flavorExtra: Record<string, number> = {
-      'Chocolate': 0, 'Truffle': 50, 'Dark Chocolate': 80
-    };
-    return Math.round(
-      this.product.price * (sizeMultiplier[this.selectedSize] ?? 1) +
-      (flavorExtra[this.selectedFlavor] ?? 0)
-    );
+  get subtotal(): number {
+    return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
 
-  get totalPrice(): number {
-    return this.unitPrice * this.quantity;
+  get totalPayable(): number {
+    return this.subtotal + this.deliveryCharge + this.packagingCharge;
   }
 
-  selectSize(size: string): void { this.selectedSize = size; }
-  selectFlavor(flavor: string): void { this.selectedFlavor = flavor; }
-
-  increaseQuantity(): void {
-    if (this.quantity < 20) this.quantity++;
+  increaseItem(item: CartItem): void {
+    if (item.quantity < 20) item.quantity++;
   }
 
-  decreaseQuantity(): void {
-    if (this.quantity > 1) this.quantity--;
+  decreaseItem(item: CartItem): void {
+    if (item.quantity > 1) item.quantity--;
   }
 
-  selectImage(index: number): void { this.currentImage = index; }
-
-  previousImage(): void {
-    this.currentImage = this.currentImage === 0
-      ? this.images.length - 1 : this.currentImage - 1;
+  changeAddress(): void {
+    this.showToast('Edit your delivery address.');
   }
 
-  nextImage(): void {
-    this.currentImage = (this.currentImage + 1) % this.images.length;
-  }
-
-  toggleWishlist(): void {
-    this.favorite = !this.favorite;
-    this.showToast(this.favorite ? 'Added to wishlist' : 'Removed from wishlist');
-  }
-
-  addToCart(): void {
-    this.cartCount += this.quantity;
-    this.showToast(`${this.product.name} added to cart`);
-    // Later: POST /api/cart/items
-  }
-
-  buyNow(): void {
-    this.showToast('Proceeding to checkout...');
-    // Later: router.navigate(['/checkout'])
-  }
-
-  openCart(): void {
+  editCart(): void {
     this.showToast('Opening cart...');
-    // Later: router.navigate(['/cart'])
+    // Later: this.router.navigate(['/cart']);
+  }
+
+  placeOrder(): void {
+    if (!this.validateOrder()) return;
+
+    this.isPlacingOrder = true;
+
+    // Later replace with:
+    // POST /api/orders
+    // {
+    //   address: this.address,
+    //   deliveryDate: this.deliveryDate,
+    //   deliverySlot: this.deliverySlot,
+    //   instructions: this.instructions,
+    //   paymentMethod: this.paymentMethod,
+    //   items: this.cartItems
+    // }
+
+    setTimeout(() => {
+      this.isPlacingOrder = false;
+      this.showToast('Order placed successfully!');
+    }, 1000);
+  }
+
+  private validateOrder(): boolean {
+    if (!this.address.fullName.trim()) return this.invalid('Please enter your name.');
+    if (!/^[0-9]{10}$/.test(this.address.phone)) return this.invalid('Please enter a valid 10-digit phone number.');
+    if (!this.address.house.trim()) return this.invalid('Please enter your house / flat details.');
+    if (!this.address.area.trim()) return this.invalid('Please enter your area / street.');
+    if (!this.address.city.trim()) return this.invalid('Please enter your city.');
+    if (!this.address.state) return this.invalid('Please select your state.');
+    if (!/^[0-9]{6}$/.test(this.address.pincode)) return this.invalid('Please enter a valid 6-digit pincode.');
+    if (!this.deliveryDate) return this.invalid('Please select delivery date.');
+    if (!this.deliverySlot) return this.invalid('Please select a delivery time slot.');
+    return true;
+  }
+
+  private invalid(message: string): false {
+    this.showToast(message);
+    return false;
   }
 
   goBack(): void {
@@ -101,9 +125,9 @@ export class OrderComponent implements OnDestroy {
   }
 
   private showToast(message: string): void {
-    this.toast = message;
+    this.toastMessage = message;
     if (this.toastTimer) clearTimeout(this.toastTimer);
-    this.toastTimer = setTimeout(() => this.toast = '', 2200);
+    this.toastTimer = setTimeout(() => this.toastMessage = '', 2400);
   }
 
   ngOnDestroy(): void {
